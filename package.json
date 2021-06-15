@@ -4,7 +4,7 @@
   "description": "Backend API for MERN authentication",
   "main": "app.js",
   "scripts": {
-    "start": "node app.js",
+    "start": "node index.js",
     "seed": "node seed.js"
   },
   "repository": {
@@ -29,3 +29,4 @@
     "passport-jwt": "^4.0.0"
   }
 }
+

@@ -26,7 +26,7 @@ const show = async (req, res) => {
     const { id } = req.params;
     try {
         // look for book based on id
-        const favorite = await favorite.findById(id);
+        const favorite = await Favorite.findById(id);
         res.json({ favorite });
     } catch (error) {
         console.log('Error inside of /api/favorites/:id');
@@ -40,7 +40,7 @@ const create = async (req, res) => {
     const { businessId, userId, businessType, name } = req.body;
 
     try {
-        const newfavorite = await Favorite.create({ businessId, userId, businessType, name})
+        const newfavorite = await Favorite.create({ businessId, userId, businessType, name })
         console.log('new favorite created', newfavorite);
         res.json({ favorite: newfavorite });
     } catch (error) {
@@ -55,8 +55,8 @@ const update = async (req, res) => {
     console.log(req.body);
 
     try {
-        const updatedfavorite = await favorite.update({ businessId: req.body.businessId }, req.body); // updating the book
-        const favorite = await favorite.findOne({ businessId: req.body.name });
+        const updatedfavorite = await Favorite.update({ name: req.body.name }, req.body); // updating the book
+        const favorite = await favorite.findOne({ name: req.body.name });
 
         console.log(updatedfavorite); // { n: 1, nModified: 0, ok: 1 }
         console.log(favorite); // a book object 
@@ -68,13 +68,14 @@ const update = async (req, res) => {
         console.log(error);
         return res.status(400).json({ message: 'favorite could not be updated. Please try again...' });
     }
+
 }
 
-const deletefavorite = async (req, res) => {
+const deleteFavorite = async (req, res) => {
     const { id } = req.params;
     try {
         console.log(id);
-        const result = await favorite.findByIdAndRemove(id);
+        const result = await Favorite.findByIdAndRemove(id);
         console.log(result);
         res.redirect('/api/favorites');
     } catch (error) {
@@ -98,6 +99,6 @@ router.post('/', passport.authenticate('jwt', { session: false }), create);
 // PUT -> /api/favorites
 router.put('/', passport.authenticate('jwt', { session: false }), update);
 // DELETE => /api/favorites/:id
-router.delete('/:id', passport.authenticate('jwt', { session: false }), deletefavorite);
+router.delete('/:id', passport.authenticate('jwt', { session: false }), deleteFavorite);
 
 module.exports = router;

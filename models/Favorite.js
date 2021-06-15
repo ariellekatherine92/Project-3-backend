@@ -13,10 +13,10 @@ const favoriteSchema = new Schema({
     businessType:{
         type: String,
     },
-    name:{
-        type:String
+    name: {
+        type: String
     }
-})
+})git add .
 
 const Favorite = mongoose.model('Favorite', favoriteSchema);
 module.exports = Favorite;
